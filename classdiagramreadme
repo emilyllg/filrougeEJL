@@ -1,0 +1,9 @@
+- play 
+- création d'un nouveau board createboard() de la classe board qui initialise les scores et un nouveau tableau 
+- placement aléatoire de hints entre 0 ( square vide) et 100 ( bombe), 1,2,3,4...8
+avec sethints(board) et placemines(board) dans game.
+- invite à cliquer 
+- clique sur une case : la case est revelee, is revealed devient true, on va chercher l'attribut associé si isrevealed et true 
+- si ismine : fin de partie, tous les autres is mine sont aussi reveles
+- si isempty toutes les cases voisines is empty et les leur aussi sont découvertes avec la méthode getneigbor dans board correspondnat à la case cliquée. tous les ishint entourant sont aussi révélées et leur booléen devient true. 
+- si ishint : seul case int découverte et hint affiché
