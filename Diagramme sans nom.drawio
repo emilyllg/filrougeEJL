@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="24.8.3">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="716" dy="704" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="1477" dy="704" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -91,7 +91,7 @@
         </mxCell>
         <mxCell id="YlAMJi-gdCCwd9eOHqb1-34" value="clic sur une case normale" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="YlAMJi-gdCCwd9eOHqb1-32">
           <mxGeometry x="0.2296" y="-1" relative="1" as="geometry">
-            <mxPoint x="-35" y="34" as="offset" />
+            <mxPoint x="15" y="4" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="YlAMJi-gdCCwd9eOHqb1-26" value="" style="triangle;whiteSpace=wrap;html=1;dashed=0;direction=south;" vertex="1" parent="1">
@@ -99,6 +99,9 @@
         </mxCell>
         <mxCell id="YlAMJi-gdCCwd9eOHqb1-43" value="" style="ellipse;html=1;shape=endState;fillColor=strokeColor;" vertex="1" parent="1">
           <mxGeometry x="515" y="510" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YlAMJi-gdCCwd9eOHqb1-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="YlAMJi-gdCCwd9eOHqb1-25" target="YlAMJi-gdCCwd9eOHqb1-25">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
