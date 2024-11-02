@@ -1,9 +1,17 @@
-- play 
-- création d'un nouveau board createboard() de la classe board qui initialise les scores et un nouveau tableau 
-- placement aléatoire de hints entre 0 ( square vide) et 100 ( bombe), 1,2,3,4...8
-avec sethints(board) et placemines(board) dans game.
-- invite à cliquer 
-- clique sur une case : la case est revelee, is revealed devient true, on va chercher l'attribut associé si isrevealed et true 
-- si ismine : fin de partie, tous les autres is mine sont aussi reveles
-- si isempty toutes les cases voisines is empty et les leur aussi sont découvertes avec la méthode getneigbor dans board correspondnat à la case cliquée. tous les ishint entourant sont aussi révélées et leur booléen devient true. 
-- si ishint : seul case int découverte et hint affiché
+Ce jeu est composé de quatre classes : 
+- La classe case, elle définit l'objet case par une position x et y entière, un hint entier entre 0 et 8 ou 100. 
+100 correspond au code bombe, 0 case vide et entre 1 et 8 le nombre de bombes voisines. Elle a deux attributs booléens ismine et isrevealed pour définir si elle contient une bombe et si elle est révélée. 
+- La classe Board qui correspond à l'objet plateau. Elle contient tous les attributs d'un plateau, sa difficulté en string qui est liée à sa taille n, plius la difficulté est grande plus le n est grand. Un plateau est composé d'une liste de cases et a un attribut booléen isrevealed pour indiquer que la partie est terminée.
+Ses méthodes createemptyboard() et display_boad() permettent pour la première de créer un nouveau plateau réinitialisé et pour la deuxième de paramétrer l'affichage en console.
+- La classe Game. Elle utilise la classe board pour les inteactions de jeu sur le plateau. 
+Elle a comme attribut un plateau Board et un booléen isover pour indique que la partie est terminée. 
+Elle a plusieurs méthodes : 
+- placemines(board) permet de placer des mines aléatoirements selon le niveau choisi. 
+- sethints(coordinates) réutilise les coordonées des bombes placées aléatoirement et rempli la grille des indices au voisinage des bombes. 
+- inputcoords(x,y) récupère les coordonées entrées par le joueur pour séléctionner une case en console. 
+- set_difficulty(level) récupère le niveau choisi par le joueur et change l'attribut du board. 
+- reveal1case et revealallcase mettent is revealed de la case ou du plateau à True. 
+- setup_game(game) initialise le premier plateau au niveau facile 
+- start_game(game) met en relation toutes les fonctions pour faire tourner le jeu.
+
+- La classe IMineSweeper, elle met en lien la classe game et les interactions utilisateurs en interface graphique. Tous les inputs précédemment entrés en console sont maintenant des événements interactifs avec le joueur dans la fenêtre de jeu. 
