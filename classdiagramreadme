@@ -3,7 +3,7 @@ Ce jeu est composé de quatre classes :
 100 correspond au code bombe, 0 case vide et entre 1 et 8 le nombre de bombes voisines. Elle a deux attributs booléens ismine et isrevealed pour définir si elle contient une bombe et si elle est révélée. 
 - La classe Board qui correspond à l'objet plateau. Elle contient tous les attributs d'un plateau, sa difficulté en string qui est liée à sa taille n, plius la difficulté est grande plus le n est grand. Un plateau est composé d'une liste de cases et a un attribut booléen isrevealed pour indiquer que la partie est terminée.
 Ses méthodes createemptyboard() et display_boad() permettent pour la première de créer un nouveau plateau réinitialisé et pour la deuxième de paramétrer l'affichage en console.
-- La classe Game. Elle utilise la classe board pour les inteactions de jeu sur le plateau. 
+- La classe Game. Elle utilise la classe board pour les interactions de jeu avec le plateau. 
 Elle a comme attribut un plateau Board et un booléen isover pour indique que la partie est terminée. 
 Elle a plusieurs méthodes : 
 - placemines(board) permet de placer des mines aléatoirements selon le niveau choisi. 
