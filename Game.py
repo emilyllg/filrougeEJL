@@ -20,7 +20,8 @@ class Game(object):
     def set_difficulty(self, level):
         """
         Définit la difficulté sans interaction utilisateur, pour l'interface graphique.
-        :param level: 'facile', 'moyen' ou 'difficile'
+        Entry : level String
+        Returns : None
         """
         if level == 'facile': 
             self.board.difficulty = 1
@@ -38,7 +39,7 @@ class Game(object):
         PlaceMines place aléatoirement des mines sur le plateau en prenant en compte la taille du plateau.
         le nombre de mines est de nombre total de postitions // 2.
         Entrée : l'objet game actuel
-        Sortie : self.board mis à jour.
+        Sortie : self.board mis à jour et coordonnées des bombes placées sur le plateau list<(int,int)>
 
         """
 
@@ -49,12 +50,12 @@ class Game(object):
         totalpos=(b)**2
 
         if self.board.difficulty==1: 
-            m=b+1
+            self.board.m=b+1
         if self.board.difficulty==2: 
-            m=b+b//4
+            self.board.m=b+b//4
         if self.board.difficulty==3: 
-            m=b+b//2
-        randI = np.random.choice(totalpos,m, replace=False)
+            self.board.m=b+b//2
+        randI = np.random.choice(totalpos,self.board.m, replace=False)
         
         # Convertir les indices aplatis en coordonnées 2D (x, y)
         coordinates = [(index // b, index % b) for index in randI]
@@ -71,6 +72,7 @@ class Game(object):
         """
         Incrémente les indices des cases autour des mines pour indiquer le nombre de mines adjacentes.
         Entrée : liste de coordonnées des mines.
+        Sortie : Plateau mis à jour avec indices
         """
 
         for c in coordinates: 
@@ -115,11 +117,18 @@ class Game(object):
                 
 
     def reveal1case(self,x,y): 
+        """Révèle une seule case.
+        Entry : coordonnées x int et y int de la case 
+        Sortie : attribut isrevealed de la case modifié à True"""
         
         self.board.listecases[x][y].isrevealed=True
         
 
     def revealALLcase(self,x,y): 
+        """Révèle tout le plateau.
+        Entry : coordonnées x int et y int  
+        Sortie : attribut isrevealed de toutes les cases modifié à True"""
+        
         for i in range(self.board.listecases.shape[0]):
             for j in range(self.board.listecases.shape[1]):
                 self.board.listecases[i][j].isrevealed=True
@@ -130,6 +139,8 @@ class Game(object):
     def propagation(self, x, y):
         """
         Révèle toutes les cases connectées ayant hint == 0, et arrête la propagation aux cases avec hint > 0.
+        Entry : coordonéées x int y int de la case cliquée 
+        Sortie : plateau mis à jour en suivant les règles de révélation de case de la fonction propagation.
         """
 
         def is_valid(nx, ny):
@@ -160,6 +171,10 @@ class Game(object):
         
     
     def CaseChoice(self,x,y):
+        """ Déclenche selon l'attribut de la case choisie la fonction correspondante du jeu . 
+        Entry : Coordonnées x int y int de la case choisie. 
+        Returns : None
+        """
         if self.board.listecases[x][y].isrevealed:
             print("Case déjà révélée.")
             return
@@ -183,6 +198,9 @@ class Game(object):
 
                 
     def start_game(self):
+        """Initialise le placement de bombes et d'indices sur un plateau. 
+        Entry :plateau du jeu actuel
+        Sortie : plateau du jeu actuel mis à jour."""
         # Initialisation du jeu
         coordinates = self.PlaceMines()
         self.SetHints(coordinates)
