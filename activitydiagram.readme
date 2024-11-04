@@ -1,0 +1,6 @@
+Read me du diagramme d'activité. 
+Pour commencer à jouer le joueur choisi un niveau puis clique sur une case.
+Si il clique à droite il marque la case d'un drapeau s'il clique à gauche il la découvre. 
+Si la case est minée le jeu est perdu il peut rejouer ou quitter. 
+Si la case découverte est une case normale il peut continuer à cliquer sur d'autres cases.
+Si la condition de fin isover est respectée ( toutes les cases non minées sont découvertes et que la dernière case cliquée n'est pas une mine) alors le jeu est gagné.
