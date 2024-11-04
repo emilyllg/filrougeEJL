@@ -13,10 +13,14 @@ class Board(object):
         self.n=n
         self.isrevealed=isrevealed
         self.listecases=self.CreateEmptyBoard()
+        self.m=0
         
         
     #création du tableau vide composé de cases. 
     def CreateEmptyBoard(self): 
+        """Crée un nouveau plateau de jeu avec des cases initialisées à hint=0, isrevealed=False et ismine=False.
+        Entry : self 
+        Returns :liste d'objets cases """
             
         listcases=np.zeros((self.n, self.n), dtype=object)
         for i in range(listcases.shape[0]):
@@ -28,8 +32,11 @@ class Board(object):
     
  
 
-    # Fonction pour afficher le tableau de manière stylisée
+
     def display_board(board):
+        """ Afficher le tableau de manière stylisée
+        Entry : Board 
+        Returns : None"""
         print("Plateau de jeu :")
         for row in board.listecases:
             line = []
