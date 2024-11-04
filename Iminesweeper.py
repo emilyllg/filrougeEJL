@@ -30,19 +30,18 @@ class Iminesweeper(QWidget):
         Entry: self
         Return:  None
         """
-        # Obtenir le niveau de difficulté choisi
-        difficulty = self.difficulty_combo.currentText().lower()  # Convertir en minuscule pour correspondre à set_difficulty
-        self.game.set_difficulty(difficulty)  # Appel à la méthode Game pour définir la difficulté
-        
-        # Réinitialiser le plateau de jeu avec la nouvelle taille et difficulté
+        difficulty = self.difficulty_combo.currentText().lower()  
+        self.game.set_difficulty(difficulty) 
 
         self.game.board = Board(self.game.board.difficulty, self.game.board.n, False)
     
-        # Mettre en place les mines et les indices pour le nouveau plateau
+        #placemines et sethints pour le nouveau plateau
         self.game.PlaceMines()
         self.game.SetHints(self.game.PlaceMines())
         
-        # Créer la grille de boutons pour la difficulté choisie
+        self.max_flags = self.game.board.m
+        self.current_flags = 0 
+        self.update_flag_count()  
         self.create_grid()
     
     def initUI(self):
@@ -56,7 +55,7 @@ class Iminesweeper(QWidget):
         
         main_layout = QVBoxLayout()
 
-    # Sélection du niveau de difficulté
+
         difficulty_layout = QHBoxLayout()
         difficulty_label = QLabel("Niveau de difficulté :")
         self.difficulty_combo = QComboBox()
@@ -65,6 +64,10 @@ class Iminesweeper(QWidget):
         
         difficulty_layout.addWidget(difficulty_label)
         difficulty_layout.addWidget(self.difficulty_combo)
+        #essai 1 compteur
+        self.flag_count_label = QLabel()  
+        main_layout.addWidget(self.flag_count_label)  
+
         
         # Ajout sélection difficulté layout principal
         main_layout.addLayout(difficulty_layout)
@@ -76,14 +79,14 @@ class Iminesweeper(QWidget):
         self.setLayout(main_layout)
         self.show()
         
-        # Charger la grille pour la difficulté par défaut
+        
         self.change_difficulty()
 
 
     def create_grid(self):
         """Crée les boutons pour la grille de jeu et les ajoute à la mise en page.
         Entry: self
-        Return: None
+        Returns: None
         """
         # Effacer les boutons précédents de la grille
         for i in reversed(range(self.grid_layout.count())):
@@ -91,7 +94,7 @@ class Iminesweeper(QWidget):
             if widget is not None:
                 widget.setParent(None)
 
-        # Créer les boutons pour le nouveau plateau
+        # Création des boutons pour le nouveau plateau
         self.buttons = {}
         for x in range(self.game.board.n):
             for y in range(self.game.board.n):
@@ -99,7 +102,7 @@ class Iminesweeper(QWidget):
                 button.setFixedSize(40, 40)
                 button.clicked.connect(lambda _, x=x, y=y: self.reveal(x, y))
                 
-                # Activer le menu contextuel pour gérer le clic droit
+                # Gestion du clic droit avec menu contextuel
                 button.setContextMenuPolicy(Qt.CustomContextMenu)
                 button.customContextMenuRequested.connect(self.show_context_menu)
 
@@ -115,7 +118,7 @@ class Iminesweeper(QWidget):
            -pos : QPoint
             La position du clic droit dans la fenêtre.
     
-        Return: None
+        Returns: None
        """
        button = self.sender()  
        x, y = next(((i, j) for (i, j), b in self.buttons.items() if b == button), (None, None))
@@ -167,15 +170,26 @@ class Iminesweeper(QWidget):
             if case.isflagged:
                 button.setText("🚩")
                 button.setStyleSheet("background-color: yellow;")
+                self.current_flags += 1  
             else:
                 button.setText("")
                 case.isrevealed=False
                 button.setStyleSheet("background-color: lightgray;")
+                self.current_flags -= 1
+            self.update_flag_count()
+            
+            
+    def update_flag_count(self):
+        """Affiche le nombre de drapeaux restants à poser. """
+        self.flag_count_label.setText(f"Drapeaux restants : {self.max_flags - self.current_flags}")
+
     
 
 
     def check_win_condition(self):
-        """Vérifie si toutes les cases non-minées ont été révélées."""
+        """Vérifie si toutes les cases non-minées ont été révélées.
+        Entry : self 
+        Returns : Booléen True si la condition de gagne est respectée."""
         for row in self.game.board.listecases:
             for case in row:
                 if not case.ismine and not case.isrevealed:
@@ -186,8 +200,10 @@ class Iminesweeper(QWidget):
     def reveal(self, x, y):
         """
         Révèle la case à la position (x, y) sur le plateau de jeu.
+        Entry : 
         x: int 
         y: int 
+        Returns : None
         """
 
         if self.game.board.listecases[x][y].isflagged:
@@ -208,6 +224,10 @@ class Iminesweeper(QWidget):
             self.win_game()
 
     def win_game(self):
+        """"
+        Entry : self
+        Returns : None
+        """
         msg_box = QMessageBox(self)
         msg_box.setWindowTitle("Victoire")
         msg_box.setText("Vous avez gagné ! Félicitations !")
@@ -215,7 +235,9 @@ class Iminesweeper(QWidget):
         self.reset_game()  
 
     def update_board(self):
-        """Met à jour l'affichage du plateau après chaque action."""
+        """Met à jour l'affichage du plateau après chaque action.
+        Entry : self
+        Returns : None"""
         for x in range(self.game.board.n):
             for y in range(self.game.board.n):
                 case = self.game.board.listecases[x][y]
@@ -233,8 +255,11 @@ class Iminesweeper(QWidget):
                         button.setStyleSheet("background-color: lightgray;")
                     button.setEnabled(False)
 
+
     def game_over(self):
         """Affiche une boîte de dialogue lorsque le joueur touche une mine, indiquant que le jeu est terminé.
+        Entry : self
+        Returns : None
         """
         msg_box = QMessageBox(self)
         msg_box.setWindowTitle("Game Over")
@@ -251,7 +276,9 @@ class Iminesweeper(QWidget):
             self.close()  
     
     def reset_game(self):
-        """Réinitialise le jeu en recréant une nouvelle instance de Game et en redémarrant la grille."""
+        """Réinitialise le jeu en recréant une nouvelle instance de Game et en redémarrant la grille.
+        Entry : self
+        Returns : None"""
         self.game = Game()  
         self.game.start_game()  
         self.create_grid()  
